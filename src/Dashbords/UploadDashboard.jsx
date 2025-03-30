@@ -74,7 +74,7 @@ function FilesList({ files, handleDelete }) {
             <li key={index} className="flex justify-between items-center bg-gray-700 p-3 rounded-lg">
               <div className="flex items-center gap-3">
                 {getFileIcon(file.name)}
-                <span className="truncate">{file.name}</span>
+                <span className="truncate w-50">{file.name}</span>
               </div>
               <Button size="sm" color="red" variant="outlined" onClick={() => handleDelete(index)}>
                 <Trash2 />

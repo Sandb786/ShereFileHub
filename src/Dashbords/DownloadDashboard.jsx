@@ -5,7 +5,7 @@ import { Download, LogOut, FileText, FileImage, FileVideo, FileMusic, File } fro
 
 export default function DownloadDashboard() {
   const [files, setFiles] = useState([
-    { name: "document.pdf", type: "pdf" },
+    { name: "documentdfhgerjhgfbkjughrfikwejhnrcfiuekhfnrrbiuergytnierfuyhtukyj.pdf", type: "pdf" },
     { name: "image.png", type: "image" },
     { name: "video.mp4", type: "video" },
     { name: "audio.mp3", type: "audio" },
@@ -45,7 +45,7 @@ export default function DownloadDashboard() {
             <li key={index} className="flex justify-between items-center bg-gray-700 p-3 rounded-lg">
               <div className="flex items-center gap-3">
                 {getFileIcon(file.type)}
-                <span className="truncate">{file.name}</span>
+                <span className="truncate w-50">{file.name}</span>
               </div>
               <Button size="sm" color="blue" variant="outlined">
                 <Download />
