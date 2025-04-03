@@ -23,7 +23,7 @@ function CustomNavbar() {
       <div className="flex justify-between items-center w-full">
 
         {/* Logo */}
-        <Typography variant="h5" className="text-blue-400">
+        <Typography variant="h3" className="text-blue-400">
           FileHub
         </Typography>
 
@@ -34,9 +34,11 @@ function CustomNavbar() {
         </div>
 
         {/* Login Button */}
-        <Button color="blue" className="px-4 py-2 transition-transform transform active:scale-90">
-          <Link to="/login">Login</Link>
-        </Button>
+        <Link to="/uploadlogin">
+          <Button color="blue" className="px-4 py-2 transition-transform transform active:scale-90 cursor-pointer">
+            Login
+          </Button>
+        </Link>
       </div>
 
     </Navbar>
@@ -47,7 +49,7 @@ function CustomNavbar() {
 function HeroSection() {
   return (
     <motion.section
-      className="h-[80vh] flex flex-col -mt-1 items-center justify-center text-center bg-gradient-to-br from-gray-900 to-gray-800 text-white px-4"
+      className="h-[90vh] flex flex-col -mt-1 items-center justify-center text-center bg-gradient-to-br from-gray-900 to-gray-800 text-white px-4"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -72,13 +74,13 @@ function HeroSection() {
         transition={{ delay: 0.5, duration: 0.5 }}
       >
 
-        <Link to="/upload">
+        <Link to="/register">
           <Button color="blue" ripple="light" className="px-6 py-3 cursor-pointer transition-transform transform active:scale-90">
             Upload File
           </Button>
         </Link>
 
-        <Link to="/download">
+        <Link to="/downloadlogin">
           <Button color="gray" ripple="light" className="px-6 py-3 cursor-pointer transition-transform transform active:scale-90 cuesor-pointer">
             Download File
           </Button>
