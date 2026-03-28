@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Navbar, Typography, Button, Card } from "@material-tailwind/react";
-import { Upload, Download, ShieldCheck, Clock, Users, Info } from "lucide-react";
+import { Upload, Download, ShieldCheck, Clock, Users, Info, Files, Share, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -23,14 +23,17 @@ function CustomNavbar() {
       <div className="flex justify-between items-center w-full">
 
         {/* Logo */}
-        <Typography variant="h3" className="text-blue-400">
-          FileHub
-        </Typography>
+        <div className="flex items-center gap-1.5">
+          <Files size={32} className="text-blue-400" />
+          <Typography variant="h3" className="text-blue-400 mb-1">
+            FileHub
+          </Typography>
+        </div>
 
         {/* Navigation Links */}
         <div className="flex space-x-6 text-white opacity-0 md:opacity-100">
           <Link to="/" className="hover:text-blue-400 transition">Home</Link>
-          <Link to="/about" className="hover:text-blue-400 transition">About Us</Link>
+          <Link to="/aboutUs" className="hover:text-blue-400 transition">About Us</Link>
         </div>
 
         {/* Login Button */}
@@ -155,8 +158,22 @@ function HowToStep({ number, icon, title, desc }) {
 // ✅ Footer
 function FooterSection() {
   return (
-    <footer className="bg-gray-900 text-white text-center py-4">
-      <Typography>&copy; 2025 FileHub. All rights reserved.</Typography>
+    <footer className="bg-gray-900 text-white text-center py-4 space-y-3">
+
+      <Typography>
+        &copy; 2025 FileHub. All rights reserved.
+      </Typography>
+
+      {/* Mobile Only Links */}
+      <div className="flex flex-col gap-2 sm:hidden">
+        <Link to="/index" className="hover:text-blue-400 transition">
+          Home
+        </Link>
+        <Link to="/aboutUs" className="hover:text-blue-400 transition">
+          About Us
+        </Link>
+      </div>
+
     </footer>
   );
 }

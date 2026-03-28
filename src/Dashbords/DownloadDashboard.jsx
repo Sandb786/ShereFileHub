@@ -22,7 +22,7 @@ export default function DownloadDashboard()
     const fetchFiles = async () => {
       try 
       {
-        const response = await axios.get(`https://filehubshering.onrender.com/getallfile`, {
+        const response = await axios.get(`/getallfile`, {
           params: { userid: userId },
         });
         console.log("FILES: ", response.data);
@@ -41,7 +41,7 @@ export default function DownloadDashboard()
     const findUser = async () => 
       {
       try {
-        const response = await axios.get(`https://filehubshering.onrender.com/getuser`, {
+        const response = await axios.get(`/getuser`, {
           params: { userid: userId },
         });
         console.log("USER: ", response.data);
@@ -67,10 +67,17 @@ export default function DownloadDashboard()
 
   const handleDownload = async (filename) => {
     try {
-      const response = await axios.get(`https://filehubshering.onrender.com/download`, {
+      const response = await toast.promise(
+        axios.get(`/download`, {
         params: { userid: userId, filename: filename },
         responseType: "blob",
-      });
+      }),
+       {
+        pending: "Lodding...",
+        // success: "Files fetched successfully!",
+      },
+      { position: "top-center", autoClose: 2000, style: { backgroundColor: "#192a45", color: "#fff" }, }
+    );
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -80,10 +87,10 @@ export default function DownloadDashboard()
       link.click();
       link.remove();
 
-      toast.success(`Downloading ${filename}`, { position: "top-center" });
+      toast.success(`Downloading ${filename}`, { position: "top-center", autoClose: 2000, style: { backgroundColor: "#192a45", color: "#fff" } });
     } catch (error) {
       console.error("Download error:", error);
-      toast.error("Failed to download file!", { position: "top-center" });
+      toast.error("Failed to download file!", { position: "top-center", autoClose: 2000, style: { backgroundColor: "#192a45", color: "#fff" } });
     }
   };
 
@@ -171,7 +178,7 @@ function Navbar({ navigate })
   return (
     <nav className="w-full flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow-lg">
       <Typography variant="h5" className="text-blue-400 font-bold">FileHub</Typography>
-      <Button color="red" variant="outlined" onClick={() => navigate("/")} className="flex items-center gap-2">
+      <Button color="red" variant="outlined" onClick={() => navigate("/index")} className="flex items-center gap-2">
         <LogOut /> Logout
       </Button>
     </nav>

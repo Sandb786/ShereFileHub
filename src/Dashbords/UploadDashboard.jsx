@@ -3,7 +3,7 @@ import { Link, useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Typography } from "@material-tailwind/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, Trash2, LogOut, FileText, FileImage, FileVideo, FileAudio, File, FileArchive, Cloud, CloudUpload, User } from "lucide-react";
+import { Upload, Trash2, LogOut, FileText, FileImage, FileVideo, FileAudio, File, FileArchive, Cloud, CloudUpload, User, FileCheck } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ExpiryTimer from "../Components/ExpiryTimer";
@@ -19,33 +19,36 @@ export default function UploadDashboard() {
 
   // ✅ Fetch file metadata whenever refreshTrigger changes
   useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const response = await axios.get(`https://filehubshering.onrender.com/getallfile`, {
-          params: { userid: userId },
-        });
-        setFileMetadata(response.data);
-        toast.success("Files fetched successfully!", {
-          position: "top-right",
-          autoClose: 1000,
-          style: { backgroundColor: "#1e293b", color: "#fff" },
-        });
-      } catch (error) {
-        console.error("Error fetching files:", error.response?.status);
+  const fetchFiles = async () => {
+  try {
+    const response = await toast.promise(
+      axios.get(`/getallfile`, {
+        params: { userid: userId },
+      }),
+      {
+        pending: "Lodding...",
+        // success: "Files fetched successfully!",
+      },
+      { position: "top-center", autoClose: 2000, style: { backgroundColor: "#192a45", color: "#fff" }, }
+    );
+    setFileMetadata(response.data);
+  } 
+  
+  catch (error) 
+  {
+    console.error("Error fetching files:", error.response?.status);
 
-        if (error.response?.status === 404) {
-          setFileMetadata([]); // Set empty array if no files found
-        }
-        else {
-          toast.error("Failed to fetch files!", { position: "top-center", autoClose: 2000, style: { backgroundColor: "#1e293b", color: "#fff" }, });
-        }
-      }
-    };
+    if (error.response?.status === 404) {
+      setFileMetadata([]);
+      toast.info("No files found for this user.", { position: "top-center", autoClose: 2000, style: { backgroundColor: "#1e293b", color: "#fff" }, });
+    }
+  }
+};
 
     const findUser = async () => 
       {
       try {
-        const response = await axios.get(`https://filehubshering.onrender.com/getuser`, {
+        const response = await axios.get(`/getuser`, {
           params: { userid: userId },
         });
         console.log("USER: ", response.data);
@@ -80,16 +83,17 @@ export default function UploadDashboard() {
       formData.append("password", password);
   
       try {
-        const response = await axios.post("https://filehubshering.onrender.com/upload", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        const response = await toast.promise(
+          axios.post("/upload", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          }),
+          {
+            pending: `Uploading ${file.name}...`,
+            success: `${file.name} uploaded successfully!`,
+          },
+          { position: "top-center", autoClose: 2000, style: { backgroundColor: "#1e293b", color: "#fff" }, }
+        );
   
-        toast.success(`File uploaded successfully!`, {
-          position: "top-right",
-          autoClose: 1000,
-          style: { backgroundColor: "#1e293b", color: "#fff" },
-        });
-
         setRefreshTrigger((prev) => !prev); // ✅ Trigger re-fetch after upload
 
         // ✅ Slightly increased delay for better multiple file handling
@@ -116,7 +120,8 @@ export default function UploadDashboard() {
   const handleDelete = async (fileName) => 
   {
     try {
-      const response = await axios.delete(`https://filehubshering.onrender.com/deletefile`, {
+      const response = await axios.delete(`/deletefile`, 
+      {
         params: { userid: userId, filename: fileName },
       });
       setRefreshTrigger((prev) => !prev); // ✅ Re-fetch files after delete
@@ -166,7 +171,7 @@ function Navbar() {
   return (
     <nav className="w-full flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow-lg">
       <Typography variant="h5" className="text-blue-400 font-bold">FileHub</Typography>
-      <Link to={'/'} >
+      <Link to={'/index'} >
         <Button color="blue" variant="filled" className="flex items-center cursor-pointer gap-2 transition-transform transform active:scale-90">
           <LogOut /> Logout
         </Button>
@@ -226,7 +231,7 @@ function FilesList({ fileMetadata, handleDelete }) {
                   <span className="text-gray-400 text-sm hidden md:block">{new Date().toLocaleTimeString()}</span>
                 </div>
 
-                <span className="text-green-400"><CloudUpload size={30} /></span>
+                <span className="text-green-400">{file.f}</span>
 
                 {/* Delete Button with Animation */}
                 <Button
@@ -266,5 +271,5 @@ function getFileIcon(fileName) {
     rar: <FileArchive className="text-orange-400" size={24} />,
   };
 
-  return fileIcons[extension] || <File className="text-gray-400" size={24} />;
+  return fileIcons[extension] || <FileCheck className="text-green-400" size={24} />;
 }

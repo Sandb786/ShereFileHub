@@ -22,7 +22,7 @@ export default function LoginUpload() {
     setLoading(true);
     
     try {
-      const response = await axios.post("https://filehubshering.onrender.com/login", form);
+      const response = await axios.post("/login", form);
       toast.success(response.data, {
         position: "top-center",
         style: { backgroundColor: "#1e293b", color: "#fff" },
@@ -48,7 +48,6 @@ export default function LoginUpload() {
           position: "top-center",
           style: { backgroundColor: "#1e293b", color: "#fff" },
         });
-        
       }
         if (error.code=== "ERR_NETWORK") // Network Error
         {
@@ -68,7 +67,7 @@ export default function LoginUpload() {
     <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 min-h-screen flex flex-col items-center relative">
       <div className="fixed top-4 left-4 z-50">
         <Link
-          to="/"
+          to="/index"
           className="flex items-center gap-2 bg-gray-900 p-3 rounded-lg shadow-lg transition duration-300 border-2 border-gray-500 text-white"
         >
           <ArrowLeft /> <Home />

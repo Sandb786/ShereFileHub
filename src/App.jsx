@@ -8,16 +8,22 @@ import UploadDashboard from "./Dashbords/UploadDashboard";
 import LoginUpload from "./pages/LoginUpload";
 import LoginDownload from "./pages/LoginDownload";
 import Demo from "./Dashbords/Demo";
+import axios from "axios";
+import Lodder from "./Lodder";
+import AboutUs from "./pages/AboutUs";
 
 
 function App() 
 {
+  axios.defaults.baseURL = "https://filehubshering.onrender.com"; // Set the base URL for all requests
   
   return (
     <Router>
     <Routes>
 
-      <Route path="/" element={<Home/>} />
+      <Route path="/index" element={<Home/>} />
+      <Route path="/" element={<Lodder/>} />
+      <Route path="/aboutUs" element={<AboutUs/>} />
 
       <Route path="/register" element={<Register/>} />
 

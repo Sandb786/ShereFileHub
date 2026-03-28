@@ -8,6 +8,8 @@ export default function ExpiryTimer({ expiryTime })
     const updateTimer = () => 
     {
       const expiry = new Date(expiryTime);
+
+      
       const now = new Date();
       const diff = expiry - now;
 

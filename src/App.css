@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+demo::after
+{
+
+  color: #192a45; /* gray-700 */
+}
