@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Lodder() {
 
-  const [secondsLeft, setSecondsLeft] = useState(10);
+  const [secondsLeft, setSecondsLeft] = useState(90);
   const [connectionStatus, setConnectionStatus] = useState(true);
   const navigate = useNavigate();
 
