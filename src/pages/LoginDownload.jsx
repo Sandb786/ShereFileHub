@@ -22,11 +22,15 @@ export default function LoginUpload() {
     setLoading(true);
     
     try {
-      const response = await axios.post("/login", form);
-      toast.success(response.data, {
-        position: "top-center",
-        style: { backgroundColor: "#1e293b", color: "#fff" },
-      });
+      const response = await toast.promise(
+        axios.post("/login", form)
+     
+      , {
+        pending: "Logging in..."
+      , success: "Login successful!"
+      },
+      { position: "top-center", autoClose: 2000, style: { backgroundColor: "#192a45", color: "#fff" }, }
+    );
 
       setTimeout(() => navigate(`/downloadfile/${form.userid}`), 1000); // Redirect after success
 
@@ -92,9 +96,7 @@ export default function LoginUpload() {
                 <label className="flex items-center">
                   <input type="checkbox" className="mr-2" /> Remember me
                 </label>
-                <Link to="/forgot-password" className="text-blue-400 hover:underline">
-                  Forgot Password?
-                </Link>
+               
               </div>
               <Button type="submit" fullWidth color="blue" className="mt-4 text-lg py-3" disabled={loading}>
                 {loading ? "Logging in..." : "Login"}

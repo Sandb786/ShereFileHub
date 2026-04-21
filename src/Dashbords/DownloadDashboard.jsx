@@ -7,6 +7,7 @@ import { Download, LogOut, FileText, FileImage, FileVideo, FileMusic, File, File
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useNavigate } from "react-router-dom";
 import ExpiryTimer from "../Components/ExpiryTimer";
+import formatFileSize from "./FileSizeFormate";
 
 export default function DownloadDashboard() 
 {
@@ -121,6 +122,7 @@ export default function DownloadDashboard()
                 <div className="flex items-center gap-3">
                   {getFileIcon(file.filename)}
                   <span className="truncate w-50">{file.filename}</span>
+                  <span className="text-blue-400 font-semibold ml-50">{formatFileSize(file.fileSize)}</span>
                 </div>
                 <Button
                   size="sm"

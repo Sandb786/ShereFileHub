@@ -22,11 +22,15 @@ export default function LoginUpload() {
     setLoading(true);
     
     try {
-      const response = await axios.post("/login", form);
-      toast.success(response.data, {
-        position: "top-center",
-        style: { backgroundColor: "#1e293b", color: "#fff" },
-      });
+      const response = await toast.promise(
+        axios.post("/login", form)
+     
+      , {
+        pending: "Logging in..."
+      , success: "Login successful!"
+      },
+      { position: "top-center", autoClose: 2000, style: { backgroundColor: "#192a45", color: "#fff" }, }
+    );
 
       setTimeout(() => navigate(`/uploadfile/${form.userid}`), 1000); // Redirect after success
 
@@ -91,16 +95,13 @@ export default function LoginUpload() {
               <InputField icon={<User />} type="text" name="userid" placeholder="User ID" value={form.userid} onChange={handleChange} />
               <InputField icon={<Lock />} type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} />
               <div className="flex justify-between text-gray-400 text-sm">
-                <label className="flex items-center">
-                  <input type="checkbox" className="mr-2" /> Remember me
-                </label>
-                <Link to="/forgot-password" className="text-blue-400 hover:underline">
-                  Forgot Password?
-                </Link>
               </div>
-              <Button type="submit" fullWidth color="blue" className="mt-4 text-lg py-3" disabled={loading}>
+
+              <div className="flex justify-center">
+              <Button type="submit"  color="blue" className="text-lg w-2xs " disabled={loading}>
                 {loading ? "Logging in..." : "Login"}
               </Button>
+              </div>
             </form>
             <Typography className="text-center text-gray-400 mt-6">
               Don't have an account? <Link to="/register" className="text-blue-400">Sign Up</Link>

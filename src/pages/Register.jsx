@@ -21,14 +21,19 @@ export default function Register() {
     setMessage("");
     console.log('\nFORM DATA: ', form); // Debugging line to check form data
 
-    try {
-      const response = await axios.post("/register", form);
-      setMessage(response.data); // Show success message from backend
-      toast.success("Temporary account created!", {
-        position: "top-center",
-        style: { backgroundColor: "#1e293b", color: "#fff" }, // Toast background & text color
-      });
+    try 
+    {
+       const response = await toast.promise(
+        axios.post("/register", form)
+      , {
+        pending: "Creating account..."
+      , success: "Temporary account created!"
+      },
+      { position: "top-center", autoClose: 2000, style: { backgroundColor: "#192a45", color: "#fff" }, }
+    );
 
+    setMessage(response.data) // Show success message from backend
+    
     } 
     catch (error) 
     {
@@ -72,7 +77,7 @@ export default function Register() {
                 {loading ? "Registering..." : "Register"}
               </Button>
             </form>
-            {message && <Typography className="text-center text-gray-300 mt-4">{message}</Typography>}
+            {message && <Typography className="text-center text-gray-200 mt-4">{message}</Typography>}
             <Typography className="text-center text-gray-400 mt-4">
               Already have an account? <Link to="/uploadlogin" className="text-blue-400">Login</Link>
             </Typography>

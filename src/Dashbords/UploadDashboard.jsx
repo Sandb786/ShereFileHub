@@ -7,6 +7,7 @@ import { Upload, Trash2, LogOut, FileText, FileImage, FileVideo, FileAudio, File
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ExpiryTimer from "../Components/ExpiryTimer";
+import formatFileSize from "./FileSizeFormate";
 
 export default function UploadDashboard() {
   const { userId } = useParams();
@@ -231,7 +232,8 @@ function FilesList({ fileMetadata, handleDelete }) {
                   <span className="text-gray-400 text-sm hidden md:block">{new Date().toLocaleTimeString()}</span>
                 </div>
 
-                <span className="text-green-400">{file.f}</span>
+                {/* <span className="text-gray-400 font-bold ">{formatFileSize(file.fileSize)}</span> */}
+                <Typography className="text-blue-300 font-semibold ">{formatFileSize(file.fileSize)}</Typography>
 
                 {/* Delete Button with Animation */}
                 <Button
