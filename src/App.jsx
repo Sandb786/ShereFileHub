@@ -15,8 +15,8 @@ import AboutUs from "./pages/AboutUs";
 
 function App() 
 {
-  // axios.defaults.baseURL = "https://filehubshering.onrender.com"; // Set the base URL for all requests
-  axios.defaults.baseURL = "http://localhost:8080"; // Set the base URL for all requests
+  axios.defaults.baseURL = "https://filehubshering.onrender.com"; // Set the base URL for all requests
+  // axios.defaults.baseURL = "http://localhost:8080"; // Set the base URL for all requests
   
   
   
