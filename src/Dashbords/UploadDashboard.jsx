@@ -137,10 +137,10 @@ export default function UploadDashboard() {
 
       <Navbar />
 
-      <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between bg-gray-800 p-4 rounded-lg shadow-lg w-full gap-4 sm:gap-0">
+      <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between bg-gray-950 p-4 rounded-lg shadow-lg w-full gap-4 sm:gap-0">
         {/* Left: User Info */}
         <div className="flex items-center gap-3">
-          <User size={45} className="text-blue-400 bg-gray-600 p-1 rounded" />
+          <User size={45} className="text-blue-400 bg-gray-800 p-1 rounded" />
           <div>
             <h1 className="text-lg font-semibold text-white">Welcome, {user.username}!</h1>
             <span className="text-gray-400 text-sm">User ID: {userId}</span>
@@ -148,7 +148,7 @@ export default function UploadDashboard() {
         </div>
 
         {/* Right: Account Expiry */}
-        <div className="bg-gray-700 px-4 py-2 rounded-lg text-center w-full sm:w-auto">
+        <div className="bg-gray-800 px-4 py-2 rounded-lg text-center w-full sm:w-auto">
           {/* <span className="text-sm text-gray-300 block">Account Expiry</span> */}
         <ExpiryTimer expiryTime={user.expiryTime} />
         </div>
@@ -170,10 +170,10 @@ export default function UploadDashboard() {
 
 function Navbar() {
   return (
-    <nav className="w-full flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow-lg">
-      <Typography variant="h5" className="text-blue-400 font-bold">FileHub</Typography>
+    <nav className="w-full flex justify-between items-center bg-gray-950 p-4 rounded-lg shadow-lg">
+      <Typography variant="h5" className="text-blue-400 font-bold">ShareHub</Typography>
       <Link to={'/index'} >
-        <Button color="blue" variant="filled" className="flex items-center cursor-pointer gap-2 transition-transform transform active:scale-90">
+        <Button color="red" variant="filled" className="flex items-center cursor-pointer gap-2 transition-transform transform active:scale-90">
           <LogOut /> Logout
         </Button>
       </Link>
@@ -184,7 +184,7 @@ function Navbar() {
 function UploadSection({ handleFileUpload }) {
   return (
     <motion.div
-      className="w-full md:w-5xl bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center"
+      className="w-full md:w-5xl bg-gray-950 p-6 rounded-lg shadow-lg flex flex-col items-center"
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
@@ -205,7 +205,7 @@ function UploadSection({ handleFileUpload }) {
 function FilesList({ fileMetadata, handleDelete }) {
   return (
     <motion.div
-      className="w-full md:w-full bg-gray-800 p-6 rounded-lg shadow-lg"
+      className="w-full md:w-full bg-gray-950 p-6 rounded-lg shadow-lg"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
@@ -217,21 +217,24 @@ function FilesList({ fileMetadata, handleDelete }) {
         <ul className="space-y-5">
           <AnimatePresence>
             {fileMetadata.map((file, index) => (
-              <motion.li
-                key={index}
-                className="flex justify-between items-center bg-gray-700 p-3 rounded-lg"
+               <motion.li  key={index}
+                className="grid  bg-gray-800 p-3 rounded-lg"
                 initial={{ opacity: 0, x: 50 }}  // Start off-screen
                 animate={{ opacity: 1, x: 0 }}  // Animate in
                 exit={{ opacity: 0, x: -50 }}   // Animate out on delete
                 transition={{ duration: 0.3 }}
                 layout  // Ensures smooth layout transition
-              >
+                >
+                  
                 <div className="flex items-center gap-2">
                   {getFileIcon(file.filename)}
-                  <span className="truncate w-30 md:w-50">{file.filename}</span>
+                  <span className="truncate md:max-w-50 w-50">{file.filename}</span>
                   <span className="text-gray-400 text-sm hidden md:block">{new Date().toLocaleTimeString()}</span>
                 </div>
 
+                 <div className=" flex justify-between mt-3">
+
+    
                 {/* <span className="text-gray-400 font-bold ">{formatFileSize(file.fileSize)}</span> */}
                 <Typography className="text-blue-300 font-semibold ">{formatFileSize(file.fileSize)}</Typography>
 
@@ -242,6 +245,8 @@ function FilesList({ fileMetadata, handleDelete }) {
                 >
                   <Trash2 />
                 </Button>
+
+              </div>
 
               </motion.li>
             ))}

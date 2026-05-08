@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { Button, Typography } from "@material-tailwind/react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Download, LogOut, FileText, FileImage, FileVideo, FileMusic, File, FileAudio, FileArchive, Info, User } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -107,7 +107,7 @@ export default function DownloadDashboard()
       
       
       <motion.div 
-        className="w-full max-w-4xl bg-gray-800 p-6 mt-4 rounded-lg shadow-lg mx-auto"
+        className="w-full max-w-4xl bg-gray-950 p-6 mt-4 rounded-lg shadow-lg mx-auto"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -116,14 +116,31 @@ export default function DownloadDashboard()
           Download Files
         </Typography>
         {files.length > 0 ? (
-          <ul className="space-y-3">
+          <ul className="space-y-5">
+            <AnimatePresence>
             {files.map((file, index) => (
-              <li key={index} className="flex justify-between items-center bg-gray-700 p-3 rounded-lg">
-                <div className="flex items-center gap-3">
+              <motion.li  key={index}
+                className="grid  bg-gray-800 p-3 rounded-lg"
+                initial={{ opacity: 0, x: 50 }}  // Start off-screen
+                animate={{ opacity: 1, x: 0 }}  // Animate in
+                exit={{ opacity: 0, x: -50 }}   // Animate out on delete
+                transition={{ duration: 0.3 }}
+                layout  // Ensures smooth layout transition
+                >
+
+                <div className="flex items-center gap-2">
                   {getFileIcon(file.filename)}
-                  <span className="truncate w-50">{file.filename}</span>
-                  <span className="text-blue-400 font-semibold ml-50">{formatFileSize(file.fileSize)}</span>
+                  <span className="truncate md:max-w-50 w-50">{file.filename}</span>
+                  <span className="text-gray-400 text-sm hidden md:block">{new Date().toLocaleTimeString()}</span>
                 </div>
+
+ 
+                <div className=" flex justify-between mt-3">
+
+
+                 {/* <span className="text-gray-400 font-bold ">{formatFileSize(file.fileSize)}</span> */}
+                  <Typography className="text-blue-300 font-semibold ">{formatFileSize(file.fileSize)}</Typography>
+
                 <Button
                   size="sm"
                   color="blue"
@@ -133,8 +150,14 @@ export default function DownloadDashboard()
                 >
                   <Download />
                 </Button>
-              </li>
+
+                </div>
+
+
+
+              </motion.li>
             ))}
+            </AnimatePresence>
           </ul>
         ) : (
           <Typography className="text-gray-400 text-center">No files available.</Typography>
@@ -152,10 +175,10 @@ export default function DownloadDashboard()
 function UserInfo({ user, userId }) {
   return (
 
-    <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between bg-gray-800 p-4 rounded-lg shadow-lg w-full gap-4 sm:gap-0">
+    <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between bg-gray-950 p-4 rounded-lg shadow-lg w-full gap-4 sm:gap-0">
             {/* Left: User Info */}
             <div className="flex items-center gap-3">
-              <User size={45} className="text-blue-400 bg-gray-600 p-1 rounded" />
+              <User size={45} className="text-blue-400 bg-gray-800 p-1 rounded" />
               <div>
                 <h1 className="text-lg font-semibold text-white">Welcome, {user.username}!</h1>
                 <span className="text-gray-400 text-sm">User ID: {userId}</span>
@@ -163,7 +186,7 @@ function UserInfo({ user, userId }) {
             </div>
     
             {/* Right: Account Expiry */}
-            <div className="bg-gray-700 px-4 py-2 rounded-lg text-center w-full sm:w-auto">
+            <div className="bg-gray-800 px-4 py-2 rounded-lg text-center w-full sm:w-auto">
               {/* <span className="text-sm text-gray-300 block">Account Expiry</span> */}
               <ExpiryTimer expiryTime={user.expiryTime} />
               
@@ -178,9 +201,9 @@ function UserInfo({ user, userId }) {
 function Navbar({ navigate }) 
 {
   return (
-    <nav className="w-full flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow-lg">
-      <Typography variant="h5" className="text-blue-400 font-bold">FileHub</Typography>
-      <Button color="red" variant="outlined" onClick={() => navigate("/index")} className="flex items-center gap-2">
+       <nav className="w-full flex justify-between items-center bg-gray-950 p-4 rounded-lg shadow-lg">
+      <Typography variant="h5" className="text-blue-400 font-bold">ShareHub</Typography>
+      <Button color="blue" variant="fill" onClick={() => navigate("/index")} className="flex items-center gap-2">
         <LogOut /> Logout
       </Button>
     </nav>

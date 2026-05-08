@@ -7,10 +7,13 @@ export default function ExpiryTimer({ expiryTime })
   useEffect(() => {
     const updateTimer = () => 
     {
-      const expiry = new Date(expiryTime);
+      // const expiry = new Date(expiryTime);
 
       
       const now = new Date();
+
+      const expiry= new Date(now.getTime() + 15 * 60 * 1000); // Convert minutes to milliseconds
+
       const diff = expiry - now;
 
       if (diff <= 0) {
@@ -30,8 +33,11 @@ export default function ExpiryTimer({ expiryTime })
     return () => clearInterval(timer); // Cleanup
   }, [expiryTime]);
 
+  console.log("Expiry Time: ", expiryTime);
+  console.log("Time Left: ", timeLeft);
+
   return (
-    <div className="bg-gray-700 px-4 py-2 rounded-lg text-center">
+    <div className="bg-gray-800 px-4 py-2 rounded-lg text-center">
       <span className="text-sm text-gray-300">Account Expiry</span>
       <p className="text-white text-lg font-semibold">{timeLeft}</p>
     </div>
